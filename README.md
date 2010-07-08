@@ -25,5 +25,4 @@ Known Issues
 ------------
 
 * The XPath bar on top doesn't scroll. Deep nested DOMs beyond the browser window will not show. Will work on this later.
-* The Current Element Wrapper may not be accurate in wrapping the current element. 
 * Not tested on IE. Works only in Firefox 3.6 and WebKit based browsers.

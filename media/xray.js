@@ -17,6 +17,8 @@ window.addEvent('domready', function(){
 	// Initialize the XRay bar
 	xray = new Element('div', {'id': 'xray'});
 	xray_wrapper = new Element('div', {'id': 'xray-wrapper'});
+	margin_adjuster = new Element('div', {'id': 'margin-adjuster'});
+
 	xray_wrapper.addEvent('click', function(e){
 		this.setStyle('display', 'none');
 		var target = findtarget(e.page, current_element);
@@ -47,12 +49,13 @@ window.addEvent('domready', function(){
 	
 	document.getElement('body')
 		.grab(xray_wrapper, 'bottom')
+		.grab(margin_adjuster, 'top')
 		.grab(
 			xray.grab(xray_switch, 'top')
 				.grab(domlist, 'bottom')
 		, 'top');
-	
-	xray.getNext('div').setStyle('margin-top', xray.getSize().y);
+		
+	margin_adjuster.setStyle('height', xray.getSize().y);
 });
 
 var onclick = function(el) {

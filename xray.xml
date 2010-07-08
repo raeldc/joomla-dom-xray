@@ -1,35 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install version="1.6" type="plugin" group="system">
-	<name>plg_system_xray</name>
+	<name>DOM X-Ray</name>
 	<author>MagicThemes</author>
 	<creationDate>July 2010</creationDate>
-	<copyright>Copyright 2010 .</copyright>
-	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<authorEmail>admin@joomla.org</authorEmail>
-	<authorUrl>www.joomla.org</authorUrl>
-	<version>1.6.0</version>
-	<description>PLG_CACHE_XML_DESCRIPTION</description>
+	<copyright>Copyright 2010</copyright>
+	<license>GNU General Public License version 2 or later.</license>
+	<authorEmail>raeldc@gmail.com</authorEmail>
+	<authorUrl>http://twitter.com/raeldc</authorUrl>
+	<version>0.1</version>
+	<description>
+		DOM X-Ray is a Joomla 1.6 DOM scanning/debugging tool. It is installed as a plugin and is triggered by Joomla "onBeforeRender". 
+		It works almost similar to CSSEdit's X-Ray but it doesn't show the location of the Element Identifiers in the CSS files. 
+		Instead it shows you the URLs where the Element Identifiers appeared throughout Joomla.
+		As you go from page to page, X-Ray learns the URLs in which the indentifiers are found. 
+		The Inspector will show those recorded URLs. Each Joomla template will have different records.
+	</description>
 	<files>
-		<filename plugin="cache">cache.php</filename>
+		<filename plugin="xray">xray.php</filename>
 		<filename>index.html</filename>
 	</files>
-
+	<media destination="plg_xray">
+		<filename>media/xray.css</filename>
+		<filename>media/xray.js</filename>
+		<filename>media/xray-bg.png</filename>
+		<filename>media/xray-back-bg.png</filename>
+		<filename>media/xray-front-bg.png</filename>
+		<filename>media/xray-mid-bg.png</filename>
+		<filename>media/xray-spacer-bg.png</filename>
+	</media>
 	<config>
-	<fields name="params">
-
-			<fieldset name="basic">
-		<field	name="browsercache" type="radio"
-			default="0"
-			description="PLG_CACHE_FIELD_BROWSERCACHE_DESC"
-			label="PLG_CACHE_FIELD_BROWSERCACHE_LABEL"
-		>
-			<option
-				value="0">JNo</option>
-			<option
-				value="1">JYes</option>
-		</field>
-		</fieldset>
-
-	</fields>
 	</config>
 </install>
