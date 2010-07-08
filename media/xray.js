@@ -1,10 +1,13 @@
 var domlist;
 var xray;
 var xray_switch;
+var xray_switch_on;
+var xray_wrapper;
 var current_element;
-var xray_switch_on = false;
 
 window.addEvent('domready', function(){
+	xray_switch_on = false;
+	
 	// Scan the dom
 	document.getElement('body').getChildren().each(onclick);
 	
@@ -13,6 +16,9 @@ window.addEvent('domready', function(){
 
 	// Initialize the XRay bar
 	xray = new Element('div', {'id': 'xray'});
+	xray_wrapper = new Element('div', {'id': 'xray-wrapper'});
+	xray_wrapper.removeEvent('click');
+	
 	domlist = new Element('ul');
 	xray_switch = new Element('div', {
 		'id': 'xray-switch', 
@@ -28,14 +34,19 @@ window.addEvent('domready', function(){
 					this.removeClass('on');
 					this.set('text', 'OFF');
 					domlist.empty();
-					current_element.removeClass('xray_wrapper');
+					xray_wrapper.setStyle('display', 'none');
 					xray_switch_on = false;
 				}
 			}
 		}
 	});
 	
-	document.getElement('body').grab(xray.grab(xray_switch, 'top').grab(domlist, 'bottom'), 'top');
+	document.getElement('body')
+		.grab(xray_wrapper, 'bottom')
+		.grab(
+			xray.grab(xray_switch, 'top')
+				.grab(domlist, 'bottom')
+		, 'top');
 	
 	xray.getNext().setStyle('margin-top', xray.getSize().y);
 });
@@ -47,6 +58,8 @@ var onclick = function(el) {
 			wrapelement(el);
 			showxray(el);
 			e.stopPropagation();
+			
+			
 			return false;
 		};
 	});
@@ -93,8 +106,13 @@ var showxray = function(el) {
 	});
 }
 
-var wrapelement = function(el) {
-	current_element.removeClass('xray_wrapper');
-	el.addClass('xray_wrapper');
-	current_element = el;
+var wrapelement = function(el) {	
+	var coordinates = el.getCoordinates();
+	xray_wrapper.setStyles({
+		'display': 'block',
+		'width': coordinates.width,
+		'height': coordinates.height
+	});
+	xray_wrapper.setPosition({'x': coordinates.left, 'y': coordinates.top - xray.getSize().y});
+	console.log(el.getStyle('z-index'));
 }

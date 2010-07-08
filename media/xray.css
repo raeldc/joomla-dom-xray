@@ -16,9 +16,12 @@
 	cursor: default;
 }
 
-.xray_wrapper {
+#xray-wrapper {
 	border: 2px solid red !important;
 	overflow: hidden !important;
+	position: absolute;	
+	z-index: 99999998;
+	display: none;
 }
 
 #xray-switch {
