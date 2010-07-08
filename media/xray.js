@@ -17,7 +17,11 @@ window.addEvent('domready', function(){
 	// Initialize the XRay bar
 	xray = new Element('div', {'id': 'xray'});
 	xray_wrapper = new Element('div', {'id': 'xray-wrapper'});
-	xray_wrapper.removeEvent('click');
+	xray_wrapper.addEvent('click', function(e){
+		this.setStyle('display', 'none');
+		var target = findtarget(e.page, current_element);
+		target.fireEvent('click', e);
+	});
 	
 	domlist = new Element('ul');
 	xray_switch = new Element('div', {
@@ -58,8 +62,6 @@ var onclick = function(el) {
 			wrapelement(el);
 			showxray(el);
 			e.stopPropagation();
-			
-			
 			return false;
 		};
 	});
@@ -72,13 +74,15 @@ var showxray = function(el) {
 	domlist.empty();
 	
 	var tagname = el.tagName;
+	
 	if (el.get('id')) {
 		tagname += '#'+el.get('id');
 	};
+	
 	if (el.get('class')) {
 		tagname += '.'+String(el.get('class')).replace(' ', '.');
 	};
-	// Get the current element
+	// Set as the current element
 	domlist.grab(new Element('li', {
 		'class': 'current', 
 		'html':'<span><span>'+tagname+'</span></span>'
@@ -98,8 +102,8 @@ var showxray = function(el) {
 			'events': {
 				// Make the xpath clickable then show the element that it refers to
 				'click': function() {
-					showxray(p);
 					wrapelement(p);
+					showxray(p);
 				}
 			}
 		}), 'top');
@@ -114,5 +118,35 @@ var wrapelement = function(el) {
 		'height': coordinates.height
 	});
 	xray_wrapper.setPosition({'x': coordinates.left, 'y': coordinates.top - xray.getSize().y});
-	console.log(el.getStyle('z-index'));
+	current_element = el;
+}
+
+var findtarget = function(cursor, target) {
+	var children = target.getChildren();
+	var realtarget = target;
+
+	for(var i = 0; i < children.length; i++)
+	{
+		var subchildren = children[i].getChildren();
+		var temptarget;
+		
+		if (subchildren.length) {
+			temptarget = findtarget(cursor, children[i]);
+		}else
+		{
+			temptarget = children[i];
+		}
+		
+		var coordinates = temptarget.getCoordinates();
+		
+		if (cursor.y >= coordinates.top && 
+			cursor.y <= coordinates.top + coordinates.height &&
+			cursor.x >= coordinates.left &&
+			cursor.x <= coordinates.left + coordinates.width
+		){
+			realtarget = temptarget;
+		};
+	}
+	
+	return realtarget;
 }
