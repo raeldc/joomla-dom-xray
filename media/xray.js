@@ -17,7 +17,8 @@ window.addEvent('domready', function(){
 	// Initialize the XRay bar
 	xray = new Element('div', {'id': 'xray'});
 	xray_wrapper = new Element('div', {'id': 'xray-wrapper'});
-	margin_adjuster = new Element('div', {'id': 'margin-adjuster'});
+	xray_adjuster = new Element('div', {'id': 'xray-adjuster'});
+	xray_inspector = new Element('div', {'id': 'xray-inspector'});
 
 	xray_wrapper.addEvent('click', function(e){
 		this.setStyle('display', 'none');
@@ -27,8 +28,8 @@ window.addEvent('domready', function(){
 	
 	domlist = new Element('ul');
 	xray_switch = new Element('div', {
-		'id': 'xray-switch', 
-		'text': 'OFF', 
+		'id': 'xray-switch',
+		'text': 'OFF',
 		'events': {
 			'click' : function(){
 				if (this.get('text') == 'OFF') {
@@ -49,13 +50,13 @@ window.addEvent('domready', function(){
 	
 	document.getElement('body')
 		.grab(xray_wrapper, 'bottom')
-		.grab(margin_adjuster, 'top')
+		.grab(xray_adjuster, 'top')
 		.grab(
 			xray.grab(xray_switch, 'top')
 				.grab(domlist, 'bottom')
 		, 'top');
 		
-	margin_adjuster.setStyle('height', xray.getSize().y);
+	xray_adjuster.setStyle('height', xray.getSize().y);
 });
 
 var onclick = function(el) {
