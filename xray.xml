@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install version="1.6" type="plugin" group="system">
 	<name>DOM X-Ray</name>
-	<author>MagicThemes</author>
+	<author>Israel D. Canasa</author>
 	<creationDate>July 2010</creationDate>
 	<copyright>Copyright 2010</copyright>
 	<license>GNU General Public License version 2 or later.</license>
