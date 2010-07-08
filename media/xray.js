@@ -52,7 +52,7 @@ window.addEvent('domready', function(){
 				.grab(domlist, 'bottom')
 		, 'top');
 	
-	xray.getNext().setStyle('margin-top', xray.getSize().y);
+	xray.getNext('div').setStyle('margin-top', xray.getSize().y);
 });
 
 var onclick = function(el) {
@@ -117,28 +117,36 @@ var wrapelement = function(el) {
 		'width': coordinates.width,
 		'height': coordinates.height
 	});
-	xray_wrapper.setPosition({'x': coordinates.left, 'y': coordinates.top - xray.getSize().y});
+	xray_wrapper.setPosition({'x': coordinates.left, 'y': coordinates.top});
 	current_element = el;
 }
 
+// This function recursively looks for an element behind an overlapping div
+//		What goes last is the best candidate as the real target.
 var findtarget = function(cursor, target) {
 	var children = target.getChildren();
 	var realtarget = target;
 
 	for(var i = 0; i < children.length; i++)
 	{
-		var subchildren = children[i].getChildren();
+		// This is the target that's in consideration
 		var temptarget;
 		
+		// Let's check if this element has children
+		var subchildren = children[i].getChildren();
+		
 		if (subchildren.length) {
+			// If it has children, recursively find a target
 			temptarget = findtarget(cursor, children[i]);
 		}else
 		{
+			// If there is no children, let's consider the current element
 			temptarget = children[i];
 		}
 		
 		var coordinates = temptarget.getCoordinates();
 		
+		// Check if the cursor hits the target in consideration
 		if (cursor.y >= coordinates.top && 
 			cursor.y <= coordinates.top + coordinates.height &&
 			cursor.x >= coordinates.left &&

@@ -38,6 +38,10 @@
 	font-weight: bold;
 }
 
+#xray ul {
+	margin: 0;
+	padding: 0;
+}
 #xray li {
 	float: left;
 	margin: 0;
