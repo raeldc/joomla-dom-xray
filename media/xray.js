@@ -31,6 +31,7 @@ window.addEvent('domready', function(){
 	
 	xray_inspector.addEvent('close', function(){
 		this.setStyle('display', 'none');
+			$('xray-inspector-content').empty().set('html', 'Please wait...');
 	});
 	
 	xray_wrapper.addEvent('click', function(e){
@@ -63,22 +64,32 @@ window.addEvent('domready', function(){
 		}
 	});
 	
+	// Request
+	var xray_request = new Request.HTML({
+		'url': 'index.php?xray-command=identify',
+		'onSuccess' : function(responseTree, responseElements, responseHTML){
+			$('xray-inspector-content').set('html',responseHTML);
+		}
+	});
+	
 	window.addEvent('rightclick', function(e){
 		if ( ! xray_switch_on) {
 			return false;
 		}
-		var coordinates = current_element.getCoordinates();
-		var cursor = e.page;
+		var x = e.page.x;
+		var y = e.page.y;
 		
-		// Check if the cursor hits the target in consideration
-		if (cursor.y >= coordinates.top && 
-			cursor.y <= coordinates.top + coordinates.height &&
-			cursor.x >= coordinates.left &&
-			cursor.x <= coordinates.left + coordinates.width
-		){
+		var xpath_bar = findtarget(e.page, domlist);
+		if(domlist != xpath_bar) {
+			xpath_bar.fireEvent('click', e);
+			y = e.page.y + xray.getSize().y;
+		}
+		
+		var data = identifiers(current_element);
+		if (data.getLength()) {
 			xray_inspector.setStyle('display', 'block');
-			xray_inspector.setPosition({'x': e.page.x, 'y': e.page.y});
-			
+			xray_inspector.setPosition({'x': x, 'y': y});
+			xray_request.post(data);
 		};
 	});
 	
@@ -136,6 +147,20 @@ var getidentifiers = function(el) {
 	}
 	
 	return tagname;
+}
+
+var identifiers = function(el) {
+	var identifiers = new Hash();
+	
+	if (el.get('id')) {
+		identifiers.set('id',el.get('id'));
+	};
+	
+	if (el.get('class') != '') {
+		identifiers.set('classes', el.get('class').split(' '));
+	}
+	
+	return identifiers;
 }
 
 var showxray = function(el) {
