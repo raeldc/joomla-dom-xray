@@ -18,7 +18,7 @@ Installation
 * Enable the Plugin
 * Import /plugins/system/xray/data.sql to your Joomla Database. (Make sure you change the prefix);
 * Visit the frontend of your Joomla site. 
-* If you want to scan the DOM, switch X-Ray on using the button on the Top Left corner.
+* The X-Ray is turned on by default. Click anywhere on the page to scan. Right click to check if it has Joomla Identifiers.
 
 Known Issues
 ------------
