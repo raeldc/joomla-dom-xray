@@ -1,16 +1,12 @@
 What is Joomla! DOM X-Ray
 =================
 
-Latest Release is **DOM X-Ray Version 0.1 (Prototype)**
-
-For now, only the XPath Bar is working. The Inspector(where you'll see the identifier occurances) doesn't work yet. 
+Latest Release is **DOM X-Ray Version 0.2 (Unstable but Working as Planned)**
 
 DOM X-Ray is a Joomla 1.6 DOM scanning/debugging tool. It is installed as a plugin and is triggered by Joomla "onBeforeRender".
 It works almost similar to CSSEdit's X-Ray but it doesn't show the location of the Element Identifiers in the CSS files. (Use Firebug/Webkit Inspector for those purposes)
-Instead it shows you the URLs where the Element Identifiers appeared throughout Joomla. 
 
-As you go from page to page, X-Ray learns the URLs in which the indentifiers are found. 
-The Inspector will show those recorded URLs. Each Joomla template will have different records.
+For now, the data was taken from http://rc.hrpr.com/j16. Thanks to their hard work, we can identify the default class/id outputs of Joomla!
 
 Installation
 ------------
