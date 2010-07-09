@@ -16,6 +16,7 @@ Installation
 * Download the Plugin
 * Install in Joomla 1.6
 * Enable the Plugin
+* Import /plugins/system/xray/data.sql to your Joomla Database. (Make sure you change the prefix);
 * Visit the frontend of your Joomla site. 
 * If you want to scan the DOM, switch X-Ray on using the button on the Top Left corner.
 
