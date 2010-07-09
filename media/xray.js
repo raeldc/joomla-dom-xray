@@ -7,7 +7,7 @@ var current_element;
 
 window.addEvent('domready', function(){
 	xray_switch_on = true;
-	
+
 	// Scan the dom
 	document.getElement('body').getChildren().each(onclick);
 	
@@ -18,8 +18,21 @@ window.addEvent('domready', function(){
 	xray = new Element('div', {'id': 'xray'});
 	xray_wrapper = new Element('div', {'id': 'xray-wrapper'});
 	xray_adjuster = new Element('div', {'id': 'xray-adjuster'});
-	xray_inspector = new Element('div', {'id': 'xray-inspector'});
-
+	xray_inspector = $('xray-inspector');
+	/*
+	xray_inspector = new Element('div', {'id': 'xray-inspector', 
+	'html' : 	'<div class="title">Inspector</div>' +
+				'<div class="content">' +
+				'<div class="content-wrapper" id="xray-inspector-content">' +
+				'' +
+				'</div></div><div class="footer"></div>'
+	});*/
+	
+	
+	xray_inspector.addEvent('close', function(){
+		this.setStyle('display', 'none');
+	});
+	
 	xray_wrapper.addEvent('click', function(e){
 		this.setStyle('display', 'none');
 		var target = findtarget(e.page, current_element);
@@ -45,28 +58,62 @@ window.addEvent('domready', function(){
 					xray_wrapper.setStyle('display', 'none');
 					xray_switch_on = false;
 				}
+				xray_inspector.fireEvent('close');
 			}
 		}
 	});
 	
+	window.addEvent('rightclick', function(e){
+		if ( ! xray_switch_on) {
+			return false;
+		}
+		var coordinates = current_element.getCoordinates();
+		var cursor = e.page;
+		
+		// Check if the cursor hits the target in consideration
+		if (cursor.y >= coordinates.top && 
+			cursor.y <= coordinates.top + coordinates.height &&
+			cursor.x >= coordinates.left &&
+			cursor.x <= coordinates.left + coordinates.width
+		){
+			xray_inspector.setStyle('display', 'block');
+			xray_inspector.setPosition({'x': e.page.x, 'y': e.page.y});
+			
+		};
+	});
+	
+	window.addEvent('contextmenu',function(e){
+		if (xray_switch_on && e.rightClick) {
+			var target = findtarget(e.page, $(document).getElement('body'));
+			target.fireEvent('click', e);
+			window.fireEvent('rightclick', e);
+		}
+		
+		return false;
+	});
+
 	document.getElement('body')
 		.grab(xray_wrapper, 'bottom')
 		.grab(xray_adjuster, 'top')
+		//.grab(xray_inspector, 'top')
 		.grab(
 			xray.grab(xray_switch, 'top')
 				.grab(domlist, 'bottom')
 		, 'top');
 		
 	xray_adjuster.setStyle('height', xray.getSize().y);
+
 });
 
 var onclick = function(el) {
-	
+	if (el.get('id') == 'xray-inspector') {
+		return;
+	};
 	el.addEvent('click', function(e){
 		if (xray_switch_on) {
 			// Empty the domlist
 			domlist.empty();
-			
+			xray_inspector.fireEvent('close');
 			wrapelement(el);
 			showxray(el);
 			e.stopPropagation();
@@ -98,7 +145,14 @@ var showxray = function(el) {
 	// Set as the current element
 	domlist.grab(new Element('li', {
 		'class': 'current', 
-		'html':'<span><span>'+tagname+'</span></span>'
+		'html':'<span><span>'+tagname+'</span></span>',
+		'events': {
+			'click': function(e) {
+				wrapelement(el);
+				xray_inspector.fireEvent('close');
+				domlist.getChildren('li.wrapped').removeClass('wrapped');
+			}
+		}
 	}));
 	
 	// Get the parent elements
@@ -109,10 +163,11 @@ var showxray = function(el) {
 			'text': tagname,
 			'events': {
 				// Make the xpath clickable then show the element that it refers to
-				'click': function() {
+				'click': function(e) {
 					wrapelement(p);
 					domlist.getChildren('li.wrapped').removeClass('wrapped');
 					this.addClass('wrapped');
+					xray_inspector.fireEvent('close');
 				}
 			}
 		}), 'top');

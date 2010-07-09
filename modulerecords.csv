@@ -1,0 +1,48 @@
+identifier,extension,suffix,used_for,tags
+moduletable,all modules,1,top-level container for modules,<div>
+archive-module,articles - archived,1,container for list of archived articles,<ul>
+categories-module,articles - categories,1,container for list of subcategories in a category,<ul>
+category-module,articles - category,1,container for list of articles in a category,<ul>
+mod-articles-category-title,articles - category,0,article title; link to article,<a>
+mod-articles-category-hits,articles - category,0,article number of hits,<span>
+mod-articles-category-writtenby,articles - category,0,article author,<span>
+mod-articles-category-category,articles - category,0,article category,<span>
+mod-articles-category-date,articles - category,0,article date,<span>
+latestnews,articles - latest news,1,container for list of latest news,<ul>
+newsflash,articles - newsflashes,1,module-specific container,<div>
+newsflash-horiz,articles - newsflashes,1,container for list of newsflashes,<ul>
+article_separator,articles - newsflashes,0,separator between items,<span>
+newsflash-item,articles - newsflashes,0,item in newsflash list,<li>
+newsflash-title,articles - newsflashes,1,module header,<h3>
+readmore,articles - newsflashes,0,link to complete list,<a>
+mostread,articles - most popular,1,container for list,<ul>
+bannergroup,banners,1,container for group,<div>
+banneritem,banners,0,container for item,<div>
+clr,banners,0,clear previous floats,<div>
+bannerfooter,banners,0,container for footer,<div>
+breadcrumb,breadcrumbs,1,breadcrumb trail,<span>
+pathway,breadcrumbs,0,breadcrumb links,<a>
+feed,news feed,0,container for feed,<div>
+newsfeed,news feed,1,container for list of feed items,<ul>
+newsfeed-item,news feed,0,feed item,<li>
+feed-link,news feed,0,header,<h5>
+feed-link,news feed,0,header,<h4>
+mod_languages,language switcher,1,module-specific container,<div>
+header,language switcher,0,module header,<div>
+footer,language switcher,0,module footer,<div>
+button,login,0,submit button,<input>
+input,login,0,container for userid and password inputs,<fieldset>
+inputbox,login,0,userid and password,<input>
+menu,menu,1,container for list of menu items,<ul>
+separator,menu,0,separator item,<span>
+random-image,random images,1,module-specific container,<div>
+relateditems,related items,1,container for list,<ul>
+search,search,1,module-specific container,<div>
+inputbox,search,0,search string,<input>
+button,search,0,submit button,<input>
+class stats-module,statistics,1,container for list,<dl>
+syndicate-module,syndication,1,link to syndicated content,<a>
+latestusers,latest users,0,container for list,<ul>
+weblinks,weblinks,0,container for list,<ul>
+whosonline,who's online,0,container for list,<ul>
+wrapper,wrapper,0,module-specific container,<iframe>
