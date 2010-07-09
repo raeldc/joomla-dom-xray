@@ -55,6 +55,11 @@
 	background-image: none;
 }
 
+#xray li.wrapped {
+	text-shadow: #ffb4a3 0 0 2px;
+	text-decoration: underline;
+}
+
 #xray li.current span {
 	display: block;
 }

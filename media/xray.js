@@ -6,7 +6,7 @@ var xray_wrapper;
 var current_element;
 
 window.addEvent('domready', function(){
-	xray_switch_on = false;
+	xray_switch_on = true;
 	
 	// Scan the dom
 	document.getElement('body').getChildren().each(onclick);
@@ -29,7 +29,8 @@ window.addEvent('domready', function(){
 	domlist = new Element('ul');
 	xray_switch = new Element('div', {
 		'id': 'xray-switch',
-		'text': 'OFF',
+		'text': 'ON',
+		'class': 'on',
 		'events': {
 			'click' : function(){
 				if (this.get('text') == 'OFF') {
@@ -63,6 +64,9 @@ var onclick = function(el) {
 	
 	el.addEvent('click', function(e){
 		if (xray_switch_on) {
+			// Empty the domlist
+			domlist.empty();
+			
 			wrapelement(el);
 			showxray(el);
 			e.stopPropagation();
@@ -73,19 +77,24 @@ var onclick = function(el) {
 	el.getChildren().each(onclick);
 };
 
-var showxray = function(el) {
-	// Empty the domlist
-	domlist.empty();
-	
+var getidentifiers = function(el) {
 	var tagname = el.tagName;
 	
 	if (el.get('id')) {
 		tagname += '#'+el.get('id');
 	};
 	
-	if (el.get('class')) {
-		tagname += '.'+String(el.get('class')).replace(' ', '.');
-	};
+	if (el.get('class') != '') {
+		tagname += '.'+el.get('class').split(' ').join('.');
+	}
+	
+	return tagname;
+}
+
+var showxray = function(el) {
+	
+	var tagname = getidentifiers(el);
+	
 	// Set as the current element
 	domlist.grab(new Element('li', {
 		'class': 'current', 
@@ -94,20 +103,16 @@ var showxray = function(el) {
 	
 	// Get the parent elements
 	el.getParents().each(function(p){
-		var tagname = p.tagName;
-		if (p.get('id')) {
-			tagname += '#'+p.get('id');
-		};
-		if (p.get('class')) {
-			tagname += '.'+String(p.get('class')).replace(' ', '.');
-		};
+		var tagname = getidentifiers(p);
+		
 		domlist.grab(new Element('li', {
 			'text': tagname,
 			'events': {
 				// Make the xpath clickable then show the element that it refers to
 				'click': function() {
 					wrapelement(p);
-					showxray(p);
+					domlist.getChildren('li.wrapped').removeClass('wrapped');
+					this.addClass('wrapped');
 				}
 			}
 		}), 'top');
