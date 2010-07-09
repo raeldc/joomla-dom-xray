@@ -18,15 +18,14 @@ window.addEvent('domready', function(){
 	xray = new Element('div', {'id': 'xray'});
 	xray_wrapper = new Element('div', {'id': 'xray-wrapper'});
 	xray_adjuster = new Element('div', {'id': 'xray-adjuster'});
-	xray_inspector = $('xray-inspector');
-	/*
+	//xray_inspector = $('xray-inspector');
+
 	xray_inspector = new Element('div', {'id': 'xray-inspector', 
 	'html' : 	'<div class="title">Inspector</div>' +
 				'<div class="content">' +
 				'<div class="content-wrapper" id="xray-inspector-content">' +
-				'' +
 				'</div></div><div class="footer"></div>'
-	});*/
+	});
 	
 	
 	xray_inspector.addEvent('close', function(){
@@ -106,7 +105,7 @@ window.addEvent('domready', function(){
 	document.getElement('body')
 		.grab(xray_wrapper, 'bottom')
 		.grab(xray_adjuster, 'top')
-		//.grab(xray_inspector, 'top')
+		.grab(xray_inspector, 'top')
 		.grab(
 			xray.grab(xray_switch, 'top')
 				.grab(domlist, 'bottom')

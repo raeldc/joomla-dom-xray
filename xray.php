@@ -9,39 +9,11 @@ class plgSystemXray extends JPlugin
 		// Use only for site.
 		if (JFactory::getApplication()->isAdmin()) 
 		{
-			//return;
+			return;
 		}
 		
 		if (JRequest::getVar('xray-command') == 'identify') 
 		{
-			/*
-			<div class="identifiers">
-			<h3>identifier (class)</h3>
-			<h4>Components</h4>
-			<ul><li>Component 1 </li><li>Component 2</li></ul>
-			<h4>Modules</h4>
-			<ul><li>Component 1 </li><li>Component 2</li></ul>
-			<h4>Optional Suffix - No</h4>
-			<h4>Used for</h4>
-			<p>category, created, last updated, published, written by</p>
-			<h4>Used Tags</h4>
-			<p>div, input</p>
-			</div>
-			
-			<div class="identifiers">
-			<h3>identifier (class)</h3>
-			<h4>Components</h4>
-			<ul><li>Component 1 </li><li>Component 2</li></ul>
-			<h4>Modules</h4>
-			<ul><li>Component 1 </li><li>Component 2</li></ul>
-			<h4>Optional Suffix - No</h4>
-			<h4>Used for</h4>
-			<p>category, created, last updated, published, written by</p>
-			<h4>Used Tags</h4>
-			<p>div, input</p>
-			</div>
-			*/
-			
 			$html = '';
 			$identifiers = array();
 			
